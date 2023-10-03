@@ -1,7 +1,8 @@
 package com.demo.joblisting.controller;
 
-import com.demo.joblisting.PostRepository;
+import com.demo.joblisting.repository.PostRepository;
 import com.demo.joblisting.model.Post;
+import com.demo.joblisting.repository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,8 @@ import java.util.List;
 public class PostController {
     @Autowired
     PostRepository repo;
+    @Autowired
+    SearchRepository srepo;
     @GetMapping("/posts")
     public List<Post> getAllPosts()
     {
@@ -23,9 +26,9 @@ public class PostController {
         return repo.save(post);
     }
 
-//    @GetMapping("search/{text}/")
-//    public List<Post> searchPost(@PathVariable String text)
-//    {
-//
-//    }
+    @GetMapping("search/{text}")
+   public List<Post> searchPost(@PathVariable String text)
+    {
+         return   srepo.findByText(text);
+    }
 }
